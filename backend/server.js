@@ -18,7 +18,7 @@ const GEMINI_API_KEY =
   process.env.GEMINI_API_KEY || "";
 
 const GEMINI_MODEL =
-  process.env.GEMINI_MODEL || "gemini-2.5-flash";
+  process.env.GEMINI_MODEL || "gemini-3.8-flash";
 
 const BACKBOARD_ASSISTANT_ID =
   process.env.BACKBOARD_ASSISTANT_ID || "";
@@ -342,7 +342,7 @@ function validateMission(mission) {
 
 
 // ============================================================
-// GEMINI GENERATION
+// GEMINI GENERATION WITH RETRY
 // ============================================================
 
 async function generateWithGemini(prompt) {
@@ -353,62 +353,161 @@ async function generateWithGemini(prompt) {
     ":generateContent?key=" +
     GEMINI_API_KEY;
 
-  const response = await fetch(
-    url,
-    {
-      method: "POST",
+  let lastError = null;
 
-      headers: {
-        "Content-Type": "application/json",
-      },
+  for (let attempt = 1; attempt <= 3; attempt++) {
 
-      body: JSON.stringify({
-        contents: [
-          {
-            role: "user",
+    try {
 
-            parts: [
+      console.log(
+        `Gemini generation attempt ${attempt}/3 using ${GEMINI_MODEL}`
+      );
+
+      const response = await fetch(
+        url,
+        {
+          method: "POST",
+
+          headers: {
+            "Content-Type": "application/json",
+          },
+
+          body: JSON.stringify({
+            contents: [
               {
-                text: prompt,
+                role: "user",
+
+                parts: [
+                  {
+                    text: prompt,
+                  },
+                ],
               },
             ],
-          },
-        ],
 
-        generationConfig: {
-          temperature: 0.8,
-          responseMimeType: "application/json",
-        },
-      }),
+            generationConfig: {
+              temperature: 0.8,
+              responseMimeType: "application/json",
+            },
+          }),
+        }
+      );
+
+
+      const data =
+        await response.json();
+
+
+      // --------------------------------------------------------
+      // RETRY TEMPORARY GEMINI ERRORS
+      // --------------------------------------------------------
+
+      if (!response.ok) {
+
+        const errorMessage =
+          data?.error?.message ||
+          JSON.stringify(data);
+
+
+        if (
+          (response.status === 503 ||
+            response.status === 429) &&
+          attempt < 3
+        ) {
+
+          console.log(
+            `Gemini temporarily unavailable (${response.status}). ` +
+            `Retrying in ${attempt * 2} seconds...`
+          );
+
+          await new Promise(
+            (resolve) =>
+              setTimeout(
+                resolve,
+                attempt * 2000
+              )
+          );
+
+          continue;
+        }
+
+
+        throw new Error(
+          "Gemini API error " +
+          response.status +
+          ": " +
+          JSON.stringify(
+            data,
+            null,
+            2
+          )
+        );
+      }
+
+
+      // --------------------------------------------------------
+      // EXTRACT GEMINI RESPONSE
+      // --------------------------------------------------------
+
+      const text =
+        data.candidates?.[0]?.content?.parts
+          ?.map(
+            (part) =>
+              part.text || ""
+          )
+          .join("") || "";
+
+
+      if (!text) {
+        throw new Error(
+          "Gemini returned an empty response."
+        );
+      }
+
+
+      return text;
+
+
+    } catch (error) {
+
+      lastError = error;
+
+      console.error(
+        `Gemini attempt ${attempt}/3 failed:`,
+        error.message
+      );
+
+
+      // Retry unexpected network errors.
+      if (
+        attempt < 3 &&
+        !error.message.includes(
+          "Gemini API error"
+        )
+      ) {
+
+        await new Promise(
+          (resolve) =>
+            setTimeout(
+              resolve,
+              attempt * 2000
+            )
+        );
+
+        continue;
+      }
+
+
+      throw error;
     }
-  );
-
-
-  if (!response.ok) {
-
-    const errorText =
-      await response.text();
-
-    throw new Error(
-      "Gemini API error " +
-      response.status +
-      ": " +
-      errorText
-    );
   }
 
 
-  const data =
-    await response.json();
-
-
-  return (
-    data.candidates?.[0]?.content?.parts
-      ?.map(
-        (part) =>
-          part.text || ""
-      )
-      .join("") || ""
+  throw (
+    lastError ||
+    new Error(
+      "Gemini generation failed."
+    )
   );
 }
 
@@ -606,6 +705,7 @@ app.post(
             BACKBOARD_ASSISTANT_ID
           ),
       });
+
 
     } catch (error) {
 
