@@ -2,36 +2,52 @@
 
 > **AI that gives you a reason to leave the screen.**
 
-TouchGrass AI is a local-first outdoor activity companion that uses AI to generate personalized real-world missions based on your available time, energy, interests, and company.
+TouchGrass AI is a local-first outdoor activity companion that uses AI to generate personalized, real-world missions based on your available time, energy, interests, and company.
 
-Instead of keeping users inside another chatbot, TouchGrass AI is designed to get them **outside, moving, observing, exploring, and interacting with the physical world.**
+Instead of keeping users inside another chatbot, TouchGrass AI encourages them to **go outside, move, observe, explore, and interact with the physical world.**
+
+🌐 **Live Demo:** https://touchgrass-ai-fq0a.onrender.com
 
 ## ✨ What It Does
 
 Tell TouchGrass AI:
 
-- ⏱️ How much time you have
-- ⚡ Your energy level
-- 🌿 What interests you
-- 👥 Whether you're alone or with others
+* ⏱️ How much time you have
+* ⚡ Your current energy level
+* 🌿 What interests you
+* 👥 Whether you're going alone or with others
 
-The AI generates a practical outdoor mission tailored to you.
+The AI generates an outdoor mission tailored to your preferences.
 
-### Example
+Each mission includes:
 
-> **Quiet Campus Explorer**
+* A memorable title
+* A short description
+* Three practical steps
+* Suggested items to bring
+* A real-world observation challenge
 
-> Turn a casual walk into a deliberate exploration by focusing on environmental details without screen distraction.
+### Example Mission
 
-The mission includes:
+**Quiet Campus Explorer**
 
-- A memorable title
-- A short description
-- Exactly 3 practical steps
-- What to bring
-- A real-world observation challenge
+Turn an ordinary walk into a deliberate exploration by observing environmental details, noticing patterns in nature, and experiencing your surroundings without digital distractions.
+
+## 🌿 Core Features
+
+* **Personalized missions:** Generate outdoor activities from user-selected preferences.
+* **Local AI inference:** Run missions locally using Ollama and Gemma 3 4B.
+* **Cloud AI generation:** Use Gemini through the deployed backend.
+* **Memory-powered personalization:** Backboard stores and retrieves outdoor preference memories.
+* **Outside Mode:** A distraction-free experience designed around completing the mission.
+* **Mission history:** Review previously generated missions.
+* **TouchGrass Score:** Earn points for completing missions.
+* **Streaks and milestones:** Track progress and encourage consistent outdoor activity.
+* **Local persistence:** Save progress in the browser using localStorage.
 
 ## 🧠 AI Architecture
+
+### Local Development
 
 ```text
 React Frontend
@@ -44,51 +60,204 @@ Gemma 3 4B
       ↓
 Personalized Outdoor Mission
 
-## 🧠 Tinker Fine-Tuning
+Backboard Memory
+      ↕
+Outdoor Preference Retrieval
+```
 
-TouchGrass AI also includes a domain-specific fine-tuned model created with Tinker.
+The local setup supports inference on the user's machine after the required model has been downloaded. Mission history and score are stored separately in browser localStorage.
+
+### Production Deployment
+
+```text
+React Frontend (Render Static Site)
+      ↓
+Express Backend (Render Web Service)
+      ↓
+Gemini API
+      ↓
+Personalized Outdoor Mission
+
+Express Backend
+      ↕
+Backboard Memory
+```
+
+The deployed application uses Gemini for cloud-based mission generation. The local Ollama setup is used for local development and testing; it is not automatically available to the cloud deployment.
+
+## 🛠️ Tech Stack
+
+| Component              | Technology       |
+| ---------------------- | ---------------- |
+| Frontend               | React, Vite, CSS |
+| Backend                | Node.js, Express |
+| Local inference        | Ollama           |
+| Local model            | Gemma 3 4B       |
+| Cloud inference        | Gemini API       |
+| Preference memory      | Backboard        |
+| Fine-tuning experiment | Tinker, LoRA     |
+| Deployment             | Render           |
+| Browser persistence    | localStorage     |
+
+## 🧠 Tinker Fine-Tuning Experiment
+
+TouchGrass AI also includes a domain-specific fine-tuning experiment using Tinker.
 
 ### Fine-Tuning Setup
 
-- **Base model:** Qwen/Qwen3.5-4B
-- **Fine-tuning method:** LoRA
-- **LoRA rank:** 16
-- **Training examples:** 8
-- **Training steps:** 10
-- **Fine-tuned checkpoint:** `touchgrass-v1`
-- **Checkpoint type:** Sampler weights
+* **Base model:** `Qwen/Qwen3.5-4B`
+* **Fine-tuning method:** LoRA
+* **LoRA rank:** 16
+* **Training examples:** 8
+* **Training steps:** 10
+* **Checkpoint:** `touchgrass-v1`
+* **Checkpoint type:** Sampler weights
 
-The training examples were designed to teach the model the specific behavior required by TouchGrass AI:
+The training examples were designed to encourage the behavior required by TouchGrass AI:
 
-- Safe outdoor activities
-- Screen-free experiences
-- Real-world interaction
-- Specific and practical missions
-- Minimal equipment
-- No dependence on apps, internet, photos, or digital navigation
+* Screen-free outdoor activities
+* Safe, practical real-world experiences
+* Minimal equipment requirements
+* Specific, actionable instructions
+* Physical-world observation challenges
+* No unnecessary dependence on apps, internet access, photos, or digital navigation
 
 ### Why Fine-Tune?
 
-A general-purpose model can generate outdoor activities, but TouchGrass AI needs a more specific behavior.
+A general-purpose model can suggest outdoor activities, but TouchGrass AI has a more specific goal: generate practical missions that encourage users to disconnect from their screens.
 
-The fine-tuning experiment was designed to make the model more consistently follow the project's core philosophy:
+The experiment explored whether a small, domain-specific dataset could encourage more consistent adherence to these requirements.
 
 > **AI should create a reason to leave the screen, not another reason to stay on it.**
 
-### Evaluation
+### Evaluation and Limitations
 
-The fine-tuned model was tested against base-model generations using the same prompts.
+The fine-tuned model was compared with base-model generations using the same prompts.
 
-The evaluation showed a noticeable shift toward:
+In the observed examples, the fine-tuned model showed stronger adherence to some screen-free and outdoor-activity constraints. However, the results were not consistently better across every dimension, including creativity and specificity.
 
-- Screen-free instructions
-- Explicit avoidance of digital devices
-- Safe public outdoor activities
-- Structured 3-step missions
-- Physical-world observation challenges
+The experiment is preliminary. With only eight training examples and ten training steps, it does not establish a general performance improvement. A larger dataset, repeatable evaluation set, and quantitative measurements would be needed to support stronger conclusions.
 
-The experiment also showed that fine-tuning did not automatically improve every dimension, such as creativity or specificity. This is an important limitation of the current small training dataset.
+The fine-tuned checkpoint is a separate experiment and is **not the model currently serving missions in the live application**.
 
-### Open Innovation
+## 🔓 Why Local-First and Open Innovation?
 
-The fine-tuning experiment demonstrates how an open-weight base model can be specialized for a focused real-world use case without training a model from scratch.
+TouchGrass AI explores how locally run AI can support a more privacy-conscious, accessible experience.
+
+* **Local inference:** Run the local version without sending mission prompts to a cloud AI provider.
+* **Privacy-conscious design:** Keep local mission history and score in browser storage.
+* **Reduced API dependence:** Local generation does not require a paid cloud inference request once the model is available.
+* **Model experimentation:** Explore different models and specialized fine-tuning approaches.
+* **Practical AI:** Use AI to encourage real-world activity rather than maximize screen time.
+
+Ollama provides the local inference tooling, while Gemma 3 is an open-weight model distributed under its applicable license. These are distinct from the separate cloud Gemini integration.
+
+## 🚀 Run Locally
+
+### Prerequisites
+
+* Node.js and npm
+* [Ollama](https://ollama.com/)
+* Git
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/rasikachavan13/-TouchGrass-AI.git
+cd -TouchGrass-AI
+```
+
+### 2. Download the local model
+
+```bash
+ollama pull gemma3:4b
+```
+
+Make sure Ollama is running before generating missions locally.
+
+### 3. Configure the backend
+
+```bash
+cd backend
+npm install
+```
+
+Create a `.env` file using `.env.example` as a reference.
+
+Configure the local model and, if desired, your Backboard credentials:
+
+```env
+PORT=5000
+FRONTEND_URL=http://localhost:5173
+
+OLLAMA_HOST=http://127.0.0.1:11434
+OLLAMA_MODEL=gemma3:4b
+
+BACKBOARD_API_KEY=
+BACKBOARD_ASSISTANT_ID=
+
+GEMINI_API_KEY=
+GEMINI_MODEL=gemini-3.8-flash
+```
+
+Keep your real API keys in `.env`. Never commit secrets to GitHub.
+
+Start the backend:
+
+```bash
+npm start
+```
+
+### 4. Configure the frontend
+
+Open a second terminal:
+
+```bash
+cd frontend
+npm install
+```
+
+Create `frontend/.env` with:
+
+```env
+VITE_API_URL=http://localhost:5000
+```
+
+Start the frontend:
+
+```bash
+npm run dev
+```
+
+Open the local URL printed by Vite, usually `http://localhost:5173`.
+
+**Note:** The deployed application uses Gemini; local development uses Ollama. Configure the required credentials and environment variables for whichever provider you intend to use. API keys should remain on the backend, never in frontend environment variables prefixed with `VITE_`.
+
+## 🔐 Security
+
+* Never commit `.env` files or API keys.
+* Keep provider credentials on the backend.
+* Use `.env.example` to document variable names without exposing secrets.
+* Avoid collecting unnecessary personal information.
+
+## 🗺️ Roadmap
+
+* [ ] Improve cloud-provider reliability and fallback behavior.
+* [ ] Expand and systematically evaluate the fine-tuning dataset.
+* [ ] Add optional cross-session preference controls.
+* [ ] Improve mission accessibility and safety guidance.
+* [ ] Explore additional local models and inference options.
+
+## 💚 Project Philosophy
+
+TouchGrass AI is built around a simple idea:
+
+**The best AI interface for this product is one you stop looking at.**
+
+The goal is not to create another destination for endless scrolling or chatting. It is to give people a small, meaningful reason to step away from their devices and reconnect with the world around them.
+
+---
+
+Built with 🌱 for the Hacktoberfest 2026 open-source AI challenge.
+
+**Less screen. More world.**
