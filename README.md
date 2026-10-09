@@ -10,6 +10,12 @@ Instead of keeping users inside another chatbot, TouchGrass AI encourages them t
 
 <img width="1896" height="1004" alt="image" src="https://github.com/user-attachments/assets/db77df6b-10f8-4555-81e7-4c0727367b08" />
 
+<img width="1888" height="1000" alt="image" src="https://github.com/user-attachments/assets/2b28a61f-9610-4c8c-a369-22587d300a32" />
+
+<img width="1381" height="666" alt="image" src="https://github.com/user-attachments/assets/a4b73057-96b0-4075-9b14-704f2bc85433" />
+
+<img width="1361" height="523" alt="image" src="https://github.com/user-attachments/assets/51f88c5b-13cb-4e49-a39b-b5b7de8dbcae" />
+
 
 ## ✨ What It Does
 
