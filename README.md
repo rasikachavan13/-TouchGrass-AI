@@ -8,6 +8,9 @@ Instead of keeping users inside another chatbot, TouchGrass AI encourages them t
 
 🌐 **Live Demo:** https://touchgrass-ai-fq0a.onrender.com
 
+<img width="1896" height="1004" alt="image" src="https://github.com/user-attachments/assets/db77df6b-10f8-4555-81e7-4c0727367b08" />
+
+
 ## ✨ What It Does
 
 Tell TouchGrass AI:
