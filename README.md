@@ -22,13 +22,27 @@ Tell TouchGrass AI:
 
 The AI generates an outdoor mission tailored to your preferences.
 
+<img width="1892" height="1001" alt="image" src="https://github.com/user-attachments/assets/f5f714c3-7c55-47e2-b30d-9b1f4d3f242e" />
+
+
 Each mission includes:
 
 * A memorable title
 * A short description
+
+<img width="1220" height="503" alt="image" src="https://github.com/user-attachments/assets/395cc57e-9524-4d30-b9f5-b8cc453c3030" />
+
 * Three practical steps
+
+<img width="1218" height="309" alt="image" src="https://github.com/user-attachments/assets/b58d7c02-fd91-49d2-94df-760fc80cb4f0" />
+
 * Suggested items to bring
+
+<img width="1196" height="203" alt="image" src="https://github.com/user-attachments/assets/43409f42-66f4-45f4-9e99-68e12fa98849" />
+
 * A real-world observation challenge
+
+<img width="1220" height="556" alt="image" src="https://github.com/user-attachments/assets/50078b0c-d2a8-453b-91e7-86b62249dee7" />
 
 ### Example Mission
 
@@ -38,53 +52,21 @@ Turn an ordinary walk into a deliberate exploration by observing environmental d
 
 ## 🌿 Core Features
 
-* **Personalized missions:** Generate outdoor activities from user-selected preferences.
-* **Local AI inference:** Run missions locally using Ollama and Gemma 3 4B.
-* **Cloud AI generation:** Use Gemini through the deployed backend.
-* **Memory-powered personalization:** Backboard stores and retrieves outdoor preference memories.
-* **Outside Mode:** A distraction-free experience designed around completing the mission.
-* **Mission history:** Review previously generated missions.
-* **TouchGrass Score:** Earn points for completing missions.
-* **Streaks and milestones:** Track progress and encourage consistent outdoor activity.
-* **Local persistence:** Save progress in the browser using localStorage.
+<img width="595" height="543" alt="image" src="https://github.com/user-attachments/assets/bbf26d6d-13d9-44a1-8401-1822fadd1bea" />
+
 
 ## 🧠 AI Architecture
 
 ### Local Development
 
-```text
-React Frontend
-      ↓
-Express Backend
-      ↓
-Ollama
-      ↓
-Gemma 3 4B
-      ↓
-Personalized Outdoor Mission
+<img width="818" height="510" alt="image" src="https://github.com/user-attachments/assets/20d79147-67a1-42a0-804d-53a560ef0dd0" />
 
-Backboard Memory
-      ↕
-Outdoor Preference Retrieval
-```
 
 The local setup supports inference on the user's machine after the required model has been downloaded. Mission history and score are stored separately in browser localStorage.
 
 ### Production Deployment
 
-```text
-React Frontend (Render Static Site)
-      ↓
-Express Backend (Render Web Service)
-      ↓
-Gemini API
-      ↓
-Personalized Outdoor Mission
-
-Express Backend
-      ↕
-Backboard Memory
-```
+<img width="778" height="529" alt="image" src="https://github.com/user-attachments/assets/4eb252f9-597a-422d-886e-e5fcb0b0d1fb" />
 
 The deployed application uses Gemini for cloud-based mission generation. The local Ollama setup is used for local development and testing; it is not automatically available to the cloud deployment.
 
@@ -155,7 +137,7 @@ TouchGrass AI explores how locally run AI can support a more privacy-conscious, 
 
 Ollama provides the local inference tooling, while Gemma 3 is an open-weight model distributed under its applicable license. These are distinct from the separate cloud Gemini integration.
 
-## 🚀 Run Locally
+##  Run Locally
 
 ### Prerequisites
 
@@ -202,8 +184,6 @@ BACKBOARD_ASSISTANT_ID=
 GEMINI_API_KEY=
 GEMINI_MODEL=gemini-3.8-flash
 ```
-
-Keep your real API keys in `.env`. Never commit secrets to GitHub.
 
 Start the backend:
 
