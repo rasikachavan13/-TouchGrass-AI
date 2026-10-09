@@ -52,15 +52,18 @@ Turn an ordinary walk into a deliberate exploration by observing environmental d
 
 ## 🌿 Core Features
 
-* **Personalized missions:** Generate outdoor activities from user-selected preferences. *
-* **Local AI inference:** Run missions locally using Ollama and Gemma 3 4B. *
-* **Cloud AI generation:** Use Gemini through the deployed backend. *
-* **Memory-powered personalization:** Backboard stores and retrieves outdoor preference memories. *
-* **Outside Mode:** A distraction-free experience designed around completing the mission. *
-* **Mission history:** Review previously generated missions. *
-* **TouchGrass Score:** Earn points for completing missions. *
-* **Streaks and milestones:** Track progress and encourage consistent outdoor activity. *
-* **Local persistence:** Save progress in the browser using localStorage.
+| Feature                        | Description                                                           |
+| ------------------------------ | --------------------------------------------------------------------- |
+| Personalized missions          | Generate outdoor activities from user-selected preferences.           |
+| Local AI inference             | Run missions locally using Ollama and Gemma 3 4B.                     |
+| Cloud AI generation            | Use Gemini through the deployed backend.                              |
+| Memory-powered personalization | Backboard stores and retrieves outdoor preference memories.           |
+| Outside Mode                   | A distraction-free experience designed around completing the mission. |
+| Mission history                | Review previously generated missions.                                 |
+| TouchGrass Score               | Earn points for completing missions.                                  |
+| Streaks and milestones         | Track progress and encourage consistent outdoor activity.             |
+| Local persistence              | Save progress in the browser using `localStorage`.                    |
+
 
 
 ## 🧠 AI Architecture
