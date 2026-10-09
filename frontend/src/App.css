@@ -185,6 +185,7 @@ header p {
   margin-left: 8px;
 }
 
+.less-screen,
 .more-world {
   color: var(--forest);
 }
@@ -987,46 +988,33 @@ main {
 
 .philosophy {
   max-width: 900px;
-
   padding: 70px 0;
-
   border-top: 1px solid var(--line);
-
   border-bottom: 1px solid var(--line);
 }
 
 .philosophy > span {
   font-family: "DM Mono", monospace;
-
   font-size: 10px;
-
   letter-spacing: 2px;
-
   color: var(--forest);
 }
 
 .philosophy h2 {
   margin: 22px 0;
-
   font-size: clamp(40px, 6vw, 72px);
-
   line-height: 0.95;
-
   letter-spacing: -4px;
+  color: var(--forest);
 }
 
 .philosophy p {
   max-width: 600px;
-
   margin: 0;
-
   color: var(--muted);
-
   font-size: 17px;
-
   line-height: 1.7;
 }
-
 
 /* ========================================
    FOOTER
@@ -1179,28 +1167,30 @@ footer {
   color: rgba(255,255,255,0.7);
 }
 
+
 .back-button {
   margin-top: 35px;
-
-  padding: 12px 18px;
-
-  border: none;
-
-  background: transparent;
-
-  color: rgba(255,255,255,0.55);
-
+  padding: 17px 25px;
+  border: 1px solid var(--lime);
+  border-radius: 2px;
+  background: var(--lime);
+  color: var(--ink);
   font-family: "DM Mono", monospace;
-
-  font-size: 11px;
-
+  font-size: 13px;
+  font-weight: 700;
   cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease;
 }
 
 .back-button:hover {
-  color: white;
+  transform: translateX(7px);
+  background: #d6e4a1;
 }
 
+.back-button::after {
+  content: " →";
+  font-size: 18px;
+}
 
 /* ========================================
    COMPLETE MODE

@@ -1,3 +1,4 @@
+
 import { useEffect, useMemo, useState } from "react";
 import "./App.css";
 
@@ -19,7 +20,6 @@ function getDateKey(date = new Date()) {
   const year = date.getFullYear();
   const month = String(date.getMonth() + 1).padStart(2, "0");
   const day = String(date.getDate()).padStart(2, "0");
-
   return `${year}-${month}-${day}`;
 }
 
@@ -157,9 +157,7 @@ function App() {
   const milestoneProgress = nextMilestone
     ? Math.min(
         100,
-        Math.round(
-          (score / nextMilestone.score) * 100
-        )
+        Math.round((score / nextMilestone.score) * 100)
       )
     : 100;
 
@@ -196,7 +194,6 @@ function App() {
       setMission(data.mission);
     } catch (err) {
       console.error(err);
-
       setError(
         "Could not reach TouchGrass AI. Make sure Ollama and the backend are running."
       );
@@ -208,10 +205,7 @@ function App() {
   function completeMission() {
     if (!mission) return;
 
-    const minutes = Number.parseInt(
-      mission.time,
-      10
-    );
+    const minutes = Number.parseInt(mission.time, 10);
 
     const basePoints = Math.min(
       Number.isNaN(minutes) ? 30 : minutes,
@@ -221,8 +215,7 @@ function App() {
     const streakBonus =
       completedToday ? 0 : currentStreak * 5;
 
-    const earnedPoints =
-      basePoints + streakBonus;
+    const earnedPoints = basePoints + streakBonus;
 
     const item = {
       id: Date.now(),
@@ -240,12 +233,7 @@ function App() {
     };
 
     setScore((previous) => previous + earnedPoints);
-
-    setHistory((previous) => [
-      item,
-      ...previous,
-    ]);
-
+    setHistory((previous) => [item, ...previous]);
     setOutsideMode(false);
     setCompleted(true);
   }
@@ -284,9 +272,7 @@ function App() {
             TOUCHGRASS / MISSION COMPLETE
           </span>
 
-          <div className="complete-icon">
-            🌱
-          </div>
+          <div className="complete-icon">🌱</div>
 
           <h1>
             You touched
@@ -301,10 +287,7 @@ function App() {
 
           <div className="score-card">
             <span>MISSION SCORE</span>
-
-            <strong>
-              +{latest?.points || 0}
-            </strong>
+            <strong>+{latest?.points || 0}</strong>
 
             {latest?.streakBonus > 0 && (
               <small>
@@ -312,9 +295,7 @@ function App() {
               </small>
             )}
 
-            <small>
-              TOTAL SCORE: {score}
-            </small>
+            <small>TOTAL SCORE: {score}</small>
           </div>
 
           <div className="mini-stats">
@@ -353,9 +334,7 @@ function App() {
             TOUCHGRASS / OUTSIDE MODE
           </span>
 
-          <div className="outside-icon">
-            🌳
-          </div>
+          <div className="outside-icon">🌳</div>
 
           <h1>
             Your mission
@@ -376,7 +355,6 @@ function App() {
 
           <div className="outside-reminder">
             <span>✦ FIELD NOTE</span>
-
             <p>
               You don't need to document this.
               <br />
@@ -398,18 +376,14 @@ function App() {
   return (
     <div className="app">
       <header>
-        <div className="logo">
-          🌱 TouchGrass AI
-        </div>
+        <div className="logo">🌱 TouchGrass AI</div>
 
         <h1>
-          Less screen.
+          <span className="less-screen">Less screen.</span>
           <span className="leaves">🍃</span>
           <br />
           <span className="leaves">🍃</span>
-          <span className="more-world">
-            More world.
-          </span>
+          <span className="more-world">More world.</span>
         </h1>
 
         <p>
@@ -442,7 +416,6 @@ function App() {
         <section className="today-banner">
           <div>
             <span>TODAY</span>
-
             <strong>
               {completedToday
                 ? "You touched grass today. 🌱"
@@ -451,9 +424,7 @@ function App() {
           </div>
 
           <span className="today-status">
-            {completedToday
-              ? "✓ COMPLETE"
-              : "NOT YET"}
+            {completedToday ? "✓ COMPLETE" : "NOT YET"}
           </span>
         </section>
 
@@ -461,11 +432,7 @@ function App() {
           <section className="milestone">
             <div className="milestone-top">
               <span>NEXT MILESTONE</span>
-
-              <strong>
-                {nextMilestone.label}
-              </strong>
-
+              <strong>{nextMilestone.label}</strong>
               <span>
                 {score}/{nextMilestone.score}
               </span>
@@ -474,9 +441,7 @@ function App() {
             <div className="progress-track">
               <div
                 className="progress-fill"
-                style={{
-                  width: `${milestoneProgress}%`,
-                }}
+                style={{ width: `${milestoneProgress}%` }}
               />
             </div>
           </section>
@@ -485,9 +450,7 @@ function App() {
         {!nextMilestone && (
           <section className="milestone complete-milestone">
             <span>🏆 ALL MILESTONES REACHED</span>
-            <strong>
-              Outside Is Home
-            </strong>
+            <strong>Outside Is Home</strong>
           </section>
         )}
 
@@ -499,57 +462,31 @@ function App() {
             It will decide what you can do with it.
           </p>
 
-          <label>
-            How much time do you have?
-          </label>
-
+          <label>How much time do you have?</label>
           <select
             value={time}
-            onChange={(e) =>
-              setTime(e.target.value)
-            }
+            onChange={(e) => setTime(e.target.value)}
           >
-            <option value="15">
-              15 minutes
-            </option>
-
-            <option value="30">
-              30 minutes
-            </option>
-
-            <option value="60">
-              1 hour
-            </option>
-
-            <option value="120">
-              2 hours
-            </option>
+            <option value="15">15 minutes</option>
+            <option value="30">30 minutes</option>
+            <option value="60">1 hour</option>
+            <option value="120">2 hours</option>
           </select>
 
-          <label>
-            What's your energy like?
-          </label>
-
+          <label>What's your energy like?</label>
           <select
             value={energy}
-            onChange={(e) =>
-              setEnergy(e.target.value)
-            }
+            onChange={(e) => setEnergy(e.target.value)}
           >
             <option>Low</option>
             <option>Medium</option>
             <option>High</option>
           </select>
 
-          <label>
-            What sounds fun?
-          </label>
-
+          <label>What sounds fun?</label>
           <select
             value={interest}
-            onChange={(e) =>
-              setInterest(e.target.value)
-            }
+            onChange={(e) => setInterest(e.target.value)}
           >
             <option>Nature</option>
             <option>Walking</option>
@@ -560,15 +497,10 @@ function App() {
             <option>Exploring</option>
           </select>
 
-          <label>
-            Who are you going with?
-          </label>
-
+          <label>Who are you going with?</label>
           <select
             value={company}
-            onChange={(e) =>
-              setCompany(e.target.value)
-            }
+            onChange={(e) => setCompany(e.target.value)}
           >
             <option>Solo</option>
             <option>Friend</option>
@@ -577,15 +509,10 @@ function App() {
           </select>
 
           {error && (
-            <div className="error-box">
-              {error}
-            </div>
+            <div className="error-box">{error}</div>
           )}
 
-          <button
-            onClick={generateMission}
-            disabled={loading}
-          >
+          <button onClick={generateMission} disabled={loading}>
             {loading
               ? "Creating your mission..."
               : "🌿 Give me a mission"}
@@ -594,10 +521,7 @@ function App() {
 
         {mission && (
           <section className="mission">
-            <span className="badge">
-              YOUR MISSION
-            </span>
-
+            <span className="badge">YOUR MISSION</span>
             <h2>{mission.title}</h2>
 
             <p className="mission-description">
@@ -612,29 +536,19 @@ function App() {
 
             <div className="mission-section">
               <h3>YOUR FIELD TASK</h3>
-
               <ol>
-                {mission.mission?.map(
-                  (step, index) => (
-                    <li key={index}>
-                      {step}
-                    </li>
-                  )
-                )}
+                {mission.mission?.map((step, index) => (
+                  <li key={index}>{step}</li>
+                ))}
               </ol>
             </div>
 
             <div className="mission-section">
               <h3>BRING</h3>
-
               <ul>
-                {mission.bring?.map(
-                  (item, index) => (
-                    <li key={index}>
-                      {item}
-                    </li>
-                  )
-                )}
+                {mission.bring?.map((item, index) => (
+                  <li key={index}>{item}</li>
+                ))}
               </ul>
             </div>
 
@@ -644,10 +558,7 @@ function App() {
             </div>
 
             <div className="mission-note">
-              <span>
-                TOUCHGRASS RULE
-              </span>
-
+              <span>TOUCHGRASS RULE</span>
               <p>
                 The mission is complete when
                 you've experienced it — not when
@@ -657,9 +568,7 @@ function App() {
 
             <button
               className="outside"
-              onClick={() =>
-                setOutsideMode(true)
-              }
+              onClick={() => setOutsideMode(true)}
             >
               🌳 I'M GOING OUTSIDE
             </button>
@@ -683,46 +592,32 @@ function App() {
             </div>
 
             <div className="history-list">
-              {history
-                .slice(0, 7)
-                .map((item) => (
-                  <article
-                    className="history-item"
-                    key={item.id}
-                  >
-                    <div className="history-icon">
-                      🌱
-                    </div>
+              {history.slice(0, 7).map((item) => (
+                <article
+                  className="history-item"
+                  key={item.id}
+                >
+                  <div className="history-icon">🌱</div>
 
-                    <div className="history-content">
-                      <h3>
-                        {item.title}
-                      </h3>
+                  <div className="history-content">
+                    <h3>{item.title}</h3>
+                    <p>
+                      {item.time} · {item.interest} ·{" "}
+                      {item.company}
+                    </p>
+                  </div>
 
-                      <p>
-                        {item.time} ·{" "}
-                        {item.interest} ·{" "}
-                        {item.company}
-                      </p>
-                    </div>
-
-                    <div className="history-score">
-                      <strong>
-                        +{item.points}
-                      </strong>
-
-                      <span>
-                        {item.date}
-                      </span>
-                    </div>
-                  </article>
-                ))}
+                  <div className="history-score">
+                    <strong>+{item.points}</strong>
+                    <span>{item.date}</span>
+                  </div>
+                </article>
+              ))}
             </div>
 
             {history.length > 7 && (
               <p className="history-footer">
-                Showing your 7 most recent
-                missions.
+                Showing your 7 most recent missions.
               </p>
             )}
           </section>
@@ -730,13 +625,11 @@ function App() {
 
         <section className="philosophy">
           <span>WHY TOUCHGRASS?</span>
-
           <h2>
             The best AI interface
             <br />
             is one you stop looking at.
           </h2>
-
           <p>
             TouchGrass AI uses local AI to create
             a reason to leave your screen — not
@@ -746,9 +639,7 @@ function App() {
 
         <footer>
           <span>TOUCHGRASS AI</span>
-          <span>
-            LOCAL AI · REAL WORLD
-          </span>
+          <span>LOCAL AI · REAL WORLD</span>
         </footer>
       </main>
     </div>
